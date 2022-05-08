@@ -15,7 +15,7 @@ int init_buffer(MessageBuffer **buffer) {
     shmid = shmget(KEY, sizeof(MessageBuffer), IPC_CREAT|0666);
     if (shmid == -1) {
         return -1;
-    }
+    } //ukhhhhhh
 
     /* TODO 1 : END                          */
     /*---------------------------------------*/
@@ -67,7 +67,7 @@ int produce(MessageBuffer **buffer, int sender_id, int data, int account_id) {
     /*---------------------------------------*/
     /* TODO 3 : produce message              */
 
-    
+
     Message msg;
     msg.sender_id = sender_id;
     msg.data = data;
