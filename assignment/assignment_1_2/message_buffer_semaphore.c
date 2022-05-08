@@ -17,7 +17,10 @@ void init_sem() {
     /*---------------------------------------*/
     /* TODO 1 : init semaphore               */
 
-    {}
+    semid = semget(KEY, 1, IPC_CREAT|0666);
+    if (semid == -1) {
+        return -1;
+    }
 
     /* TODO 1 : END                          */
     /*---------------------------------------*/
@@ -28,7 +31,9 @@ void destroy_sem() {
     /*---------------------------------------*/
     /* TODO 2 : destroy semaphore            */
 
-    {}
+    if(semctl(semid, 0, IPC_RMID, sem_union) == -1) {
+        return -1;
+    }
 
     /* TODO 2 : END                          */
     /*---------------------------------------*/

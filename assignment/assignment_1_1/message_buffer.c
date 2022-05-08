@@ -12,7 +12,10 @@ int init_buffer(MessageBuffer **buffer) {
     /*---------------------------------------*/
     /* TODO 1 : init buffer                  */
 
-    {}
+    shmid = shmget(KEY, sizeof(MessageBuffer), IPC_CREAT|0666);
+    if (shmid == -1) {
+        return -1;
+    }
 
     /* TODO 1 : END                          */
     /*---------------------------------------*/
@@ -26,7 +29,10 @@ int attach_buffer(MessageBuffer **buffer) {
     /* TODO 2 : attach buffer                */
     /* do not consider "no buffer situation" */
     
-    {}
+    memory_segment = shmat(shmid, NULL, 0);
+    if (memory_segment == (void*)-1) {
+        return -1;
+    }
 
     /* TODO 2 : END                          */
     /*---------------------------------------*/
@@ -61,7 +67,12 @@ int produce(MessageBuffer **buffer, int sender_id, int data, int account_id) {
     /*---------------------------------------*/
     /* TODO 3 : produce message              */
 
-    {}
+    
+    Message msg;
+    msg.sender_id = sender_id;
+    msg.data = data;
+    msg.account_id = account_id;
+
 
     /* TODO 3 : END                          */
     /*---------------------------------------*/
@@ -78,7 +89,9 @@ int consume(MessageBuffer **buffer, Message **message) {
     /*---------------------------------------*/
     /* TODO 4 : consume message              */
 
-    {}
+    *message = &((*buffer)->messages[(*buffer)->is_empty]);
+    (*buffer)->is_empty = ((*buffer)->is_empty + 1) % BUFFER_SIZE;
+
 
     /* TODO 4 : END                          */
     /*---------------------------------------*/
